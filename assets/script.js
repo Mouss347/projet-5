@@ -21,55 +21,46 @@ const slides = [
 
 
 //*********************Récuperation des classes
-let arrow_left = document.querySelector(".arrow_left"); // recuperation du boutton Gauche
-let arrow_right = document.querySelector(".arrow_right"); // recuperation du boutton Droit
-let bannerImg = document.querySelector (".banner-img"); // recuperation de la premiere image et ou sera notre carrousel  
-let dots = document.querySelectorAll(".dot"); // recuperation de tout les points
+let arrow_left = document.querySelector(".arrow_left"); 
+let arrow_right = document.querySelector(".arrow_right");
+let bannerImg = document.querySelector (".banner-img"); 
+let dots = document.querySelectorAll(".dot");
 let changement = 0; // variable qui servira pour les changements
+
+
+//***************************************Les fonctions***************************************//
+
 
 
 //Fonction pour changer l'etat du point dots, si il est pareil que changement, qui lui coorespond, il se met en couleur si non pas de couleur.: on passe en revue (dot, i)
 function updateDots() {
-    dots.forEach((dot, i) => {
+    dots.forEach((dot, i) => {  //parcourir dot et i 
         if (i === changement) {    
-            dot.classList.add('dot_selected'); 
+            dot.classList.add('dot_selected');  //on lui donne une nouvelle caractéristique ; on ajoute le btn selectionner
         } else {
-            dot.classList.remove('dot_selected'); 
+            dot.classList.remove('dot_selected');  //on lui donne une nouvelle caractéristique ; on supprime le btn selectionner
         }
     });
 }
 
 
 
-//***********************Les fonctions
-
 function Carrousel() {     
     if (changement < 0) {   //si changement est plus petit que 0
-        changement = slides.length - 1;   //alors revenir au dernier donc 3
+        changement = slides.length - 1;   //alors changement deviendra le nombre du tableau -1
     } else if (changement >= slides.length) {   //sinon si changement est egale ou plus grand que lenght
         changement = 0;                             //alors revenir sur la premiere donc 0
     }
 
 
-
-const currentSlide = slides[changement]; //variable qui dit que changement est le numero a regarder dans le slider selon la fonction carousel 
-
-const imagePath = `assets/images/slideshow/${currentSlide.image}`;
-// Met à jour l'image de la bannière avec la nouvelle image et un texte alternatif
-
-
-
-
-bannerImg.src = imagePath; //prend l'image html qui s'apelle bannerImg et met a jour son src avec la nouvelle valeur qu'a pris la variable du dessus 
-
-const tagLine = currentSlide.tagLine; //variable tagline qui recupere le tagline de chaque slide a son changement
-document.querySelector('#banner p').innerHTML = tagLine;  //on change le tagline de bannerp par celui de current slideù
-
-updateDots(); //on met a jour les points
+bannerImg.src = `assets/images/slideshow/${slides[changement].image}`; //changement de la src de l'image et l'afficher
+document.querySelector('#banner p').innerHTML = slides[changement].tagLine; // recuperation du texte de position actuel 
+updateDots(); //mise a jour des points
 }
 
 
-//*********************les ecoutes de clique
+
+//*********************les ecoutes de clique*****************************//
 arrow_left.addEventListener('click', function () {   //quand on clique sur arrow left alors changement -
     changement--;
     Carrousel();
